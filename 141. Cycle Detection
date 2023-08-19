@@ -1,0 +1,32 @@
+In this problem, We have to determine if a linked list has cycle in it.
+
+Approach - Here, we use Floyd's Cycle Detection Algorithm. We initialise two pointers fast and slow respectively to head.
+           The fast pointer is increased two steps in every loop and slow pointer is increased only once until the fast becomes NULL or              fast->next becomes NULL.
+           If the two pointers meet at a single point in the loop then a cycle is present else not.
+
+Note:- Pay attention to this line ---->    while(fast!=NULL and fast->next!=NULL)
+       If the conditions inside while is interchanged it may produce an error. This is to check when fast becomes null, the next member          of a NULL pointer is not accessed. 
+
+       The first condition, fast->next != NULL, still ensures that you're not accessing the next member of a NULL pointer, which is good.        However, the second condition, fast != NULL, would only become false after fast has already become NULL. This means the loop would        continue even when fast is NULL, which is not desirable. This can lead to unexpected behavior and potentially infinite looping.
+
+
+Code - 
+        class Solution {
+        public:
+        bool hasCycle(ListNode *head) {
+        ListNode*fast=head;
+        ListNode*slow=head;
+        bool cyclepresentornot=false;
+        while(fast!=NULL and fast->next!=NULL){
+            slow=slow->next;
+            fast=fast->next->next;
+            
+            if(fast==slow){
+                cyclepresentornot=true;
+                break;
+            }
+        }
+        
+        return cyclepresentornot;
+    }
+};
