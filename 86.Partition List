@@ -1,0 +1,39 @@
+In this Question we are given a linked list and a number 'x' and we have to do the following operations:
+
+1) If a node is greater than x , it should come after 'x';
+2) If a node is less than x, it should come before 'x';
+Also maintaining the relative positions;
+
+Approach:   We would create two dummy nodes - LessThanX and GraeterThanX and two pointers - LessCurr and GreaterCurr pointing to dummy nodes respectively;
+            We would traverse the LinkedList node by node and compare each node with x;
+            If the node is less than x, bind it to LessCurr and if it is greater than or equal to x, bind it to GreaterCurr;
+            At the end , concatenate both the lists and return the head of the list;
+            Also,take care to not include the dummy nodes by returing the address of next node;
+
+
+Code:   class Solution {
+        public:
+        ListNode* partition(ListNode* head, int x) {
+        ListNode LessThanX(0);
+        ListNode*LessCurr=&LessThanX;
+        ListNode MoreThanX(0);
+        ListNode*MoreCurr=&MoreThanX;
+        while(head!=NULL){
+            if(head->val < x){
+                LessCurr->next=head;
+                LessCurr=LessCurr->next;
+            }
+            else{
+                MoreCurr->next=head;
+                MoreCurr=MoreCurr->next;
+            }
+            head=head->next;
+        }
+    LessCurr->next =MoreThanX.next;
+    MoreCurr->next = nullptr;
+
+    return LessThanX.next;
+    }
+};
+          
+           
