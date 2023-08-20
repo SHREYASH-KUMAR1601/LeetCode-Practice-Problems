@@ -1,0 +1,129 @@
+In this Question, we have to reverse a given linked list.
+
+Approach - There can be many approaches . However three are discussed here.
+
+          1.)  In this we initialise three pointers , prev current and next. For each step forward we move each pointer one step and also                   change the direction of pointing.
+
+Code- void reverse(node*head){
+      node* current=head;
+      node*next=NULL,*prev=NULL;
+      while(current!=NULL){
+          next=current->next;
+          current->next=prev;
+          prev=current;
+          current=next;
+      }
+      head=prev;
+}
+
+
+        2.) In this approach, we use stack to reverse a linked list.  Iteratre through the linked list until you rech the end and store                 every node in the stack.Move the head to the last node. Now, take out an element from stack and push it to the next of the head             until the stack becomes empty.
+
+Code- void reverse(node*head){
+      stack<node*>s;
+      node*temp=head;
+      while(temp->next!=NULL){
+          s.push(temp);
+          temp=temp->next;
+      }
+      head=temp;
+
+    while(!s.empty()){
+          temp->next=s.top();
+          s.pop();
+          temp=temp->next;
+    }
+temp->next=NULL;
+}
+
+
+      3.) In this approach, we use recursion to solve the problem.
+
+**Example Linked List:** 1 -> 2 -> 3 -> 4 -> 5
+
+**Recursive Approach:**
+
+1. The initial call is `reverseList(1)`, where `1` is the head of the linked list.
+
+   Since `1` has a next node (`2`), the base case is not met. We proceed to the recursive case.
+
+   - The recursive call is `reverseList(2)`.
+
+2. The call `reverseList(2)`:
+
+   - `2` also has a next node (`3`). So, we proceed with the recursion.
+
+     - The recursive call is `reverseList(3)`.
+
+3. The call `reverseList(3)`:
+
+   - `3` has a next node (`4`). We continue with the recursion.
+
+     - The recursive call is `reverseList(4)`.
+
+4. The call `reverseList(4)`:
+
+   - `4` has a next node (`5`). Continue with recursion.
+
+     - The recursive call is `reverseList(5)`.
+
+5. The call `reverseList(5)`:
+
+   - `5` is the last node. It doesn't have a next node, so the base case is met.
+
+   - The function returns `5` because it's the last node, which becomes the new head of the reversed list at this level of recursion.
+
+6. Back to the call `reverseList(4)`:
+
+   - The returned value from the `reverseList(5)` call is `5`.
+
+   - At this point, the pointers are manipulated:
+     - `5`'s `next` pointer is set to point to `4`, reversing the direction.
+     - `4`'s `next` pointer is set to `NULL` to cut off its link to `5`.
+
+   - The function returns `5` as well.
+
+7. Back to the call `reverseList(3)`:
+
+   - The returned value from the `reverseList(4)` call is `5`.
+
+   - Pointer manipulations are performed:
+     - `4`'s `next` pointer is now pointing to `3`.
+     - `3`'s `next` pointer is set to `NULL`.
+
+   - The function returns `5`.
+
+8. Back to the call `reverseList(2)`:
+
+   - The returned value from the `reverseList(3)` call is `5`.
+
+   - Pointer manipulations are performed:
+     - `3`'s `next` pointer now points to `2`.
+     - `2`'s `next` pointer is set to `NULL`.
+
+   - The function returns `5`.
+
+9. Back to the initial call `reverseList(1)`:
+
+   - The returned value from the `reverseList(2)` call is `5`.
+
+   - Pointer manipulations are performed:
+     - `2`'s `next` pointer now points to `1`.
+     - `1`'s `next` pointer is set to `NULL`.
+
+   - The function returns `5`.
+
+10. The final reversed list is `5 -> 4 -> 3 -> 2 -> 1`.
+
+code- node*reverseList(node*head){
+      // base case
+      if(head==NULL or head->next==NULL){
+            return head;
+      }
+
+    // rec case
+     node*reversedList=reverseList(head->next);
+     head->next->next=head;   // to reverse the pointer direction
+     head->next=NULL;
+    return reversedList;
+}
